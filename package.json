@@ -22,6 +22,7 @@
     "bcrypt": "^6.0.0",
     "dot-env": "^0.0.1",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.0"
   }
 }

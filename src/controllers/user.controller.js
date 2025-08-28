@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/user.model");
+
 const createUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -17,7 +18,7 @@ const createUser = async (req, res) => {
 
     // Here we are Hashing password using bcrypt
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(password, "=>", hashedPassword);
+    // console.log(password, "=>", hashedPassword);
 
     // After that save user in database
     const newUser = await UserModel.create({
@@ -25,8 +26,8 @@ const createUser = async (req, res) => {
       email,
       password: hashedPassword,
     });
-
-    console.log("newUser", newUser);
+    // console.log("newUser", newUser);
+    
     // Responding without exposing password only created user details
     res.status(201).json({
       success: true,
@@ -42,5 +43,8 @@ const createUser = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
+
 
 module.exports = { createUser };

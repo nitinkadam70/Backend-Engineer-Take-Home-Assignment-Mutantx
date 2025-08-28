@@ -7,6 +7,7 @@ dotenv.config();
 
 // Import routes
 const userRouter = require("./src/routes/user.routes");
+const authRouter = require("./src/routes/auth.routes");
 
 // Initialize app
 const app = express();
@@ -18,7 +19,7 @@ app.get("/", (req, res) => {
   res.send({ message: "Welcome to the home page" });
 });
 app.use("/api/users", userRouter);
-
+app.use("/api/auth", authRouter);
 
 const PORT = process.env.PORT || 8080;
 
