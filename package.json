@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
     "start": "node server.js"
   },
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/nitinkadam70/Backend-Engineer-Take-Home-Assignment-Mutantx#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dot-env": "^0.0.1",
     "express": "^5.1.0",
     "mongoose": "^8.18.0"
