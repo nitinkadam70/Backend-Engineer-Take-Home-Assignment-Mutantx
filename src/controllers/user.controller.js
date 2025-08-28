@@ -27,7 +27,7 @@ const createUser = async (req, res) => {
       password: hashedPassword,
     });
     // console.log("newUser", newUser);
-    
+
     // Responding without exposing password only created user details
     res.status(201).json({
       success: true,
@@ -44,7 +44,59 @@ const createUser = async (req, res) => {
   }
 };
 
+// Get user profile
+const getUserProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
 
+    const user = await UserModel.findById(userId).select("-password");
 
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-module.exports = { createUser };
+    return res
+      .status(200)
+      .json({ message: "User profile fetched successfully", user });
+  } catch (error) {
+    // console.log("getUserProfile error:", error);
+    return res
+      .status(500)
+      .json({ message: "Error fetching profile", error: error.message });
+  }
+};
+
+//  Edit user profile
+const editUserProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    // console.log("userId", userId);
+    const { username } = req.body;
+    // console.log("editUserProfile: ", req.body);
+
+    const updatedData = {};
+    if (username) updatedData.username = username;
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      { _id: userId },
+      { $set: updatedData },
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    // console.log("updatedUser", updatedUser);
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Profile updated successfully", user: updatedUser });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error updating profile", error: error.message });
+  }
+};
+
+module.exports = { createUser, getUserProfile, editUserProfile };
