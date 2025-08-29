@@ -8,6 +8,7 @@ const authMiddleware = require("../middlewares/auth.middlewares");
 
 const userRouter = Router();
 
+// register user route
 userRouter.post("/register", createUser);
 
 // Get user profile - protected Route

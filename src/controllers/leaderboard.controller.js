@@ -41,11 +41,19 @@ const getLeaderboard = async (req, res) => {
     // count total users for pagination info
     const totalUsers = await userModel.countDocuments();
 
-    // assign ranks (global rank, not just page-wise)
-    const rankedLeaderboard = leaderboard.map((entry, index) => ({
-      rank: skip + index + 1,
-      ...entry,
-    }));
+    // assign ranks according to user score - rank : 1 rank:2
+
+    let currentRank = 1;
+    let prevScore = null;
+
+    const rankedLeaderboard = leaderboard.map((entry, index) => {
+      if (entry.totalScore !== prevScore) {
+        currentRank = index + 1; // new rank only when score changes
+      }
+      prevScore = entry.totalScore;
+
+      return { rank: currentRank, ...entry };
+    });
 
     return res.status(200).json({
       success: true,
