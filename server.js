@@ -9,6 +9,7 @@ dotenv.config();
 const userRouter = require("./src/routes/user.routes");
 const authRouter = require("./src/routes/auth.routes");
 const scoreRouter = require("./src/routes/score.routes");
+const leaderboardRouter = require("./src/routes/leaderboard.routes");
 
 // Initialize app
 const app = express();
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/scores", scoreRouter);
+app.use("/api/leaderboard", leaderboardRouter);
 
 const PORT = process.env.PORT || 8080;
 
