@@ -59,7 +59,7 @@ npm start
 http://localhost:8080
 ```
 
-📖 API Documentation
+## 📖 API Documentation
 
 The project includes a Swagger/OpenAPI spec.
 
@@ -67,5 +67,26 @@ The project includes a Swagger/OpenAPI spec.
 https://app.swaggerhub.com/apis-docs/nitin-4ad/Leaderboard/1.0.0
 ```
 
+## 🗂️ Database Schema Design
+
+### 1. User Schema
+
+```bash
+{
+  username: String,   // min 3, max 25 chars
+  email: String,      // unique, valid format
+  password: String,   // hashed password
+  totalPoints: Number // default: 0, used for leaderboard
+}
+```
+
+### 2. Score Schema
+
+```bash
+{
+  userId: ObjectId,   // ref -> User
+  points: Number,     // allowed values: 5, 10, 50
+}
+```
 ## 👨‍💻 Author
 ### Developed by Nitin Kadam
