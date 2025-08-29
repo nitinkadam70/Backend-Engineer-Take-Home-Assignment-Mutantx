@@ -99,7 +99,7 @@ Authorization: Bearer <JWT_TOKEN>
 
 ## 7. Get Leaderboard - protected Route
 
-## GET /api/leaderboard/get-leaderboard
+## GET /api/leaderboard/get-leaderboard?page=1&limit=10
 
 **Description:** This API generates a ranked leaderboard of all users based on their total accumulated scores. It includes both active users (with scores) and inactive users (with 0 points), sorted first by highest total score and then by most recent activity. Each user is assigned a rank (1, 2, 3, …) in the response.
 

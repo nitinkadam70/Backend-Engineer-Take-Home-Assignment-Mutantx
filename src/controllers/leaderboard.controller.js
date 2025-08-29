@@ -1,26 +1,29 @@
-const scoreModel = require("../models/score.model");
 const userModel = require("../models/user.model");
+
 const getLeaderboard = async (req, res) => {
   try {
+    // get page and limit from query params (default: page=1, limit=10)
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    // aggregate pipeline
     const leaderboard = await userModel.aggregate([
       {
-        // join all scores for each user
         $lookup: {
-          from: "scores", // collection name for scores
-          localField: "_id", // user _id
-          foreignField: "userId", // match with userId in scores
-          as: "scores", // all matching scores in array
+          from: "scores",
+          localField: "_id",
+          foreignField: "userId",
+          as: "scores",
         },
       },
       {
-        // calculate totalScore and lastActivity
         $addFields: {
-          totalScore: { $sum: "$scores.points" }, // sum of all points
-          lastActivity: { $max: "$scores.createdAt" }, // latest score date
+          totalScore: { $sum: "$scores.points" },
+          lastActivity: { $max: "$scores.createdAt" },
         },
       },
       {
-        // only select required fields
         $project: {
           _id: 0,
           userId: "$_id",
@@ -30,21 +33,25 @@ const getLeaderboard = async (req, res) => {
           lastActivity: 1,
         },
       },
-      {
-        // sort users -> first by score, then last activity
-        $sort: { totalScore: -1, lastActivity: -1 },
-      },
+      { $sort: { totalScore: -1, lastActivity: -1 } },
+      { $skip: skip }, // skip documents
+      { $limit: limit }, // limit documents
     ]);
 
-    // assign ranks (users with 0 points will be at the bottom)
+    // count total users for pagination info
+    const totalUsers = await userModel.countDocuments();
+
+    // assign ranks (global rank, not just page-wise)
     const rankedLeaderboard = leaderboard.map((entry, index) => ({
-      rank: index + 1,
+      rank: skip + index + 1,
       ...entry,
     }));
 
     return res.status(200).json({
       success: true,
       count: rankedLeaderboard.length,
+      page,
+      totalPages: Math.ceil(totalUsers / limit),
       leaderboard: rankedLeaderboard,
     });
   } catch (error) {

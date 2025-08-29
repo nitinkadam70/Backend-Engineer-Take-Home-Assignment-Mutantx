@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./src/config/db");
 
-// Load environment variables from .env file
+// Loading environment variables from .env file
 dotenv.config();
 
 // Import routes

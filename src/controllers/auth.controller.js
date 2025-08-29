@@ -50,4 +50,13 @@ const login = async (req, res) => {
   }
 };
 
+// const logout = async (req, res) => {
+//   try {
+//     res.json({ message: "Logout successful" });
+//   } catch (err) {
+//     console.log("logout:", err);
+//     res.status(500).json({ message: err.message });
+//   }
+// };
+
 module.exports = { login };
