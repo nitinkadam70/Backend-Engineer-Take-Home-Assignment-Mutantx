@@ -6,10 +6,12 @@ const connectDB = require("./src/config/db");
 dotenv.config();
 
 // Import routes
-const userRouter = require("./src/routes/user.routes");
-const authRouter = require("./src/routes/auth.routes");
-const scoreRouter = require("./src/routes/score.routes");
-const leaderboardRouter = require("./src/routes/leaderboard.routes");
+const {
+  userRouter,
+  authRouter,
+  scoreRouter,
+  leaderboardRouter,
+} = require("./src/routes/index");
 
 // Initialize app
 const app = express();

@@ -43,16 +43,15 @@ const getLeaderboard = async (req, res) => {
 
     // assign ranks according to user score - rank : 1 rank:2
 
-    let currentRank = 1;
+    let rank = 0;
     let prevScore = null;
 
-    const rankedLeaderboard = leaderboard.map((entry, index) => {
+    const rankedLeaderboard = leaderboard.map((entry) => {
       if (entry.totalScore !== prevScore) {
-        currentRank = index + 1; // new rank only when score changes
+        rank += 1; // only bump when score changes
+        prevScore = entry.totalScore;
       }
-      prevScore = entry.totalScore;
-
-      return { rank: currentRank, ...entry };
+      return { rank, ...entry };
     });
 
     return res.status(200).json({
