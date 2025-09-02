@@ -99,7 +99,7 @@ A script mock_data.js is included to seed the database with mock users and score
 ### Run with custom count:
 ```node
 
-node mock_data.js --count=50
+node mock_data.js --count=10
 
 ```
 
