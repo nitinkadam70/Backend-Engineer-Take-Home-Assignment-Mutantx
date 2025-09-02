@@ -69,7 +69,7 @@ async function generateMockData() {
     const scores = [];
 
     insertedUsers.forEach((user) => {
-      // Generate 2 random scores per user
+      // Generate random scores per user
       for (let i = 0; i < 2; i++) {
         scores.push({
           userId: user._id,

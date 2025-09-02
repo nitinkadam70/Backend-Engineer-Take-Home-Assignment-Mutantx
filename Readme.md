@@ -3,6 +3,8 @@
 This project is a backend system built with **Node.js, Express, and MongoDB**.  
 It provides APIs for **user authentication, leaderboard management, and scoring system** with JWT-based authentication.
 
+Additionally, it includes a **mock data generation script** for testing purposes.
+
 ---
 
 ## 🚀 Tech Stack
@@ -15,6 +17,7 @@ It provides APIs for **user authentication, leaderboard management, and scoring 
 - **bcrypt** – Password hashing
 - **express-rate-limit** – Protect APIs from brute-force attacks
 - **dotenv** – Environment variable management
+- **faker.js** – Generate mock data
 
 ---
 
@@ -88,5 +91,25 @@ https://app.swaggerhub.com/apis-docs/nitin-4ad/Leaderboard/1.0.0
   points: Number,     // allowed values: 5, 10, 50
 }
 ```
+
+## 🧪 Mock Data Generation
+
+A script mock_data.js is included to seed the database with mock users and scores.
+
+### Run with custom count:
+```node
+
+node mock_data.js --count=50
+
+```
+
+## ✅ Features of mock data script:
+
+- Creates users with faker-generated usernames, emails, and passwords
+- Passwords are bcrypt hashed before saving
+- Inserts random scores per user with points chosen from [5, 10, 50]
+- Validates input count (must be a positive integer)
+- Handles DB connection cleanup after insertion
+
 ## 👨‍💻 Author
 ### Developed by Nitin Kadam
